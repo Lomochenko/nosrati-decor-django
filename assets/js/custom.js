@@ -1,5 +1,5 @@
 function SliderProject() {
-    $(".slider-project .swiper-container").each(function(e) {
+    $(".slider-project .swiper-container").each(function (e) {
         new Swiper(this, {
             slidesPerView: "auto",
             spaceBetween: 60,
@@ -16,7 +16,7 @@ function SliderProject() {
 }
 
 function data_overlay() {
-    $("[data-overlay-color]").each(function(e) {
+    $("[data-overlay-color]").each(function (e) {
         var t = $(this),
             n = dsnGrid.removeAttr(t, "data-overlay-color");
         t.addClass("dsn-overlay-" + e), $("body").append("<style>.dsn-overlay-" + e + "[data-overlay]:before{background: " + n + ";}</style>")
@@ -24,7 +24,7 @@ function data_overlay() {
 }
 
 function background() {
-    $(".cover-bg, section , [data-image-src]").each(function() {
+    $(".cover-bg, section , [data-image-src]").each(function () {
         var e = $(this).attr("data-image-src");
         void 0 !== e && !1 !== e && $(this).css("background-image", "url(" + e + ")")
     })
@@ -46,21 +46,21 @@ function slick_client(e) {
 
 function contactValidator() {
     var e = $("#contact-form");
-    e < 1 || (e.validator(), e.on("submit", function(t) {
+    e < 1 || (e.validator(), e.on("submit", function (t) {
         if (!t.isDefaultPrevented()) {
             return $.ajax({
                 type: "POST",
                 url: "contact.php",
                 data: $(this).serialize(),
-                success: function(t) {
+                success: function (t) {
                     var n = "alert-" + t.type,
                         a = t.message,
                         i = '<div class="alert ' + n + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + a + "</div>";
-                    n && a && (e.find(".messages").html(i), e[0].reset()), setTimeout(function() {
+                    n && a && (e.find(".messages").html(i), e[0].reset()), setTimeout(function () {
                         e.find(".messages").html("")
                     }, 3e3)
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e)
                 }
             }), !1
@@ -76,7 +76,7 @@ function initMap() {
             var n = document.createElement("script");
             n.type = "text/javascript", n.id = "map_api", n.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyA49hGCmzG22gXOfg784H0w8DtKEsSvq7k", document.body.appendChild(n)
         }
-        setTimeout(function() {
+        setTimeout(function () {
             try {
                 var t = $("#map"),
                     n = t.data("dsn-lat"),
@@ -201,7 +201,7 @@ function initMap() {
                             }]
                         }]
                     });
-                google.maps.event.addDomListener(window, "resize", function() {
+                google.maps.event.addDomListener(window, "resize", function () {
                     var e = s.getCenter();
                     google.maps.event.trigger(s, "resize"), s.setCenter(e)
                 });
@@ -217,60 +217,91 @@ function initMap() {
             }
         }, 1e3)
     }
-}! function(e) {
+}
+
+function initCursor() {
+    const cursor = document.querySelector('.cursor');
+    const cursorHelper = document.querySelector('.cursor-helper');
+    const cursorView = document.querySelector('.cursor-view');
+    const cursorClose = document.querySelector('.cursor-close');
+    const cursorLink = document.querySelector('.cursor-link');
+
+    // Add cursor effect for tt-accordion-item
+    const accordionItems = document.querySelectorAll('.tt-accordion-item');
+    accordionItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            cursor.classList.add('cursor-hover');
+            cursorHelper.classList.add('cursor-hover');
+            cursorView.classList.add('cursor-hover');
+            cursorClose.classList.add('cursor-hover');
+            cursorLink.classList.add('cursor-hover');
+        });
+
+        item.addEventListener('mouseleave', () => {
+            cursor.classList.remove('cursor-hover');
+            cursorHelper.classList.remove('cursor-hover');
+            cursorView.classList.remove('cursor-hover');
+            cursorClose.classList.remove('cursor-hover');
+            cursorLink.classList.remove('cursor-hover');
+        });
+    });
+}
+
+! function (e) {
     "use strict";
 
     function t(n) {
         data_overlay(),
-            function() {
+            function () {
                 if (e('[data-dsn-temp="light"]').length > 0) {
                     o.addClass("v-light");
                     let t = e('[data-dsn-header="project"]');
                     t.length <= 0 ? o.addClass("menu-light") : t.hasClass("header-hero-2") && o.addClass("menu-light")
                 } else o.removeClass("v-light")
             }(), background(), initMap(),
-            function() {
+            initCursor(),
+            function () {
                 const t = e(".filtering");
                 var n = e(".gallery").isotope({
                     itemSelector: ".item",
                     transitionDuration: "0.5s"
                 });
-                t.on("click", "button", function() {
+                t.on("click", "button", function () {
                     var t = e(this).attr("data-filter");
                     n.isotope({
                         filter: t
                     })
-                }), t.on("click", "button", function() {
+                }), t.on("click", "button", function () {
                     e(this).addClass("active").siblings().removeClass("active");
                     let t = i;
-                    r.isScroller(!0) && (t = r.getScrollbar()), setTimeout(function() {
+                    r.isScroller(!0) && (t = r.getScrollbar()), setTimeout(function () {
                         TweenLite.to(t, 1.5, {
                             scrollTo: n.offset().top - 150,
                             ease: Expo.easeInOut
                         })
                     }, 500)
-                }), n.find("video").each(function() {
+                }), n.find("video").each(function () {
                     this.pause();
-                    e(this).parents(".item").find("> a").on("mouseenter", function() {
+                    e(this).parents(".item").find("> a").on("mouseenter", function () {
                         e(this).parents(".item").find("video")[0].play()
-                    }).on("mouseleave", function() {
+                    }).on("mouseleave", function () {
                         e(this).parents(".item").find("video")[0].pause()
                     })
                 })
             }(), SliderProject(), slick_client(i),
-            function(n) {
+            function (n) {
                 const r = "dsn-effect-animate",
                     l = '[data-dsn-ajax="img"]';
                 var d = !0;
                 return {
                     main_root: e("main.main-root"),
                     ajax_click: e("a.effect-ajax "),
-                    isEffectAjax: function() {
+                    isEffectAjax: function () {
                         return !o.hasClass("dsn-ajax")
                     },
-                    ajaxLoad: function() {
+                    ajaxLoad: function () {
                         var t = this;
-                        n && this.ajax_click.off("click"), this.ajax_click.on("click", function(n) {
+                        n && this.ajax_click.off("click"), this.ajax_click.on("click", function (n) {
                             if (!t.isEffectAjax()) {
                                 n.preventDefault();
                                 var i = e(this),
@@ -280,7 +311,7 @@ function initMap() {
                             }
                         })
                     },
-                    ajaxSlider: function(t, n) {
+                    ajaxSlider: function (t, n) {
                         let a = this,
                             i = t.parents(".slide-content").data("dsn-id"),
                             o = e('.dsn-slider .slide-item[data-dsn-id="' + i + '"] .cover-bg').first(),
@@ -288,25 +319,25 @@ function initMap() {
                         void 0 !== s && TweenMax.to(".project-metas , .nav-slider ,.footer-slid ,.view-all , .dsn-all-work ", .8, {
                             autoAlpha: 0,
                             scale: .8,
-                            onComplete: function() {
+                            onComplete: function () {
                                 o.removeClass("hidden"), o.find("img").addClass("hidden"), a.createElement(o, s, e(".dsn-root-slider"))
                             }
                         })
                     },
-                    ajaxList: function(t, n) {
+                    ajaxList: function (t, n) {
                         let a = this,
                             i = e(".nav-work-img-box img.dsn-active").first(),
                             s = n;
                         void 0 !== s && TweenMax.to(".nav-work-box .list-main", .8, {
                             autoAlpha: 0,
-                            onComplete: function() {
-                                a.createElement(i, s), setTimeout(function() {
+                            onComplete: function () {
+                                a.createElement(i, s), setTimeout(function () {
                                     o.removeClass("dsn-show-work")
                                 }, 1e3)
                             }
                         })
                     },
-                    ajaxNextProject: function(e, t) {
+                    ajaxNextProject: function (e, t) {
                         let n = this,
                             a = e.parents(".next-project"),
                             i = a.find(".bg-image").first(),
@@ -317,11 +348,11 @@ function initMap() {
                         }), TweenMax.staggerTo(a.find(".project-title").find("span , h5"), .8, {
                             autoAlpha: 0,
                             y: -50
-                        }, .1, function() {
+                        }, .1, function () {
                             n.createElement(i, o, a.find(".bg"))
                         }))
                     },
-                    ajaxBlog: function(e, t) {
+                    ajaxBlog: function (e, t) {
                         let n = this,
                             a = e.parents(".post-list-item").find(".bg").first(),
                             i = t;
@@ -333,12 +364,12 @@ function initMap() {
                         }), TweenMax.to(".post-list-item-content", .8, {
                             autoAlpha: 0,
                             scale: .8,
-                            onComplete: function() {
+                            onComplete: function () {
                                 n.createElement(a.find("img"), i)
                             }
                         }))
                     },
-                    ajaxWork: function(e, t) {
+                    ajaxWork: function (e, t) {
                         let n = e.find("img");
                         n.removeClass("hidden");
                         let a = this;
@@ -347,12 +378,12 @@ function initMap() {
                             height: "100%",
                             top: 0,
                             y: "0%",
-                            onComplete: function() {
+                            onComplete: function () {
                                 a.createElement(n, t)
                             }
                         })
                     },
-                    createElement: function(n, i, s, d, c) {
+                    createElement: function (n, i, s, d, c) {
                         let u = this,
                             f = e('<div class="active-ajax-e"></div>');
                         f.css({
@@ -372,19 +403,19 @@ function initMap() {
                         TweenMax.to(f, 1, {
                             autoAlpha: 1,
                             ease: Power4.easeInOut,
-                            onComplete: function() {
-                                o.removeClass(r), u.loader(i, function(n, i, s) {
+                            onComplete: function () {
+                                o.removeClass(r), u.loader(i, function (n, i, s) {
                                     var d = e(l);
                                     if (d.length <= 0) return TweenMax.to([f, h], 1, {
                                         width: 0,
                                         autoAlpha: 0,
                                         delay: 1,
                                         ease: Expo.easeIn,
-                                        onStart: function() {
+                                        onStart: function () {
                                             a().unlocked(), t()
                                         },
-                                        onComplete: function() {
-                                            o.addClass(r), setTimeout(function() {
+                                        onComplete: function () {
+                                            o.addClass(r), setTimeout(function () {
                                                 f.remove()
                                             }, 500)
                                         }
@@ -400,16 +431,16 @@ function initMap() {
                                         height: d.height(),
                                         objectFit: "cover",
                                         borderRadius: 0,
-                                        onComplete: function() {
+                                        onComplete: function () {
                                             TweenMax.to(f, m, {
                                                 height: 0,
-                                                onComplete: function() {
+                                                onComplete: function () {
                                                     a().unlocked(), u.showAnimate()
                                                 }
                                             }), TweenMax.to(h, m, {
                                                 autoAlpha: 0,
                                                 delay: g,
-                                                onComplete: function() {
+                                                onComplete: function () {
                                                     f.remove()
                                                 }
                                             })
@@ -419,7 +450,7 @@ function initMap() {
                             }
                         })
                     },
-                    addElement: function(e, t, n) {
+                    addElement: function (e, t, n) {
                         if (void 0 === t || t.length <= 0) return;
                         (void 0 === n || n.length <= 0) && (n = t);
                         let a = t.clone(),
@@ -435,7 +466,7 @@ function initMap() {
                             objectFit: "cover"
                         }), a.css(dsnGrid.getBoundingClientRect(n[0])), e.append(a), a
                     },
-                    ajaxNormal: function(t) {
+                    ajaxNormal: function (t) {
                         var n = this,
                             s = e('<div class="class-ajax-loader"></div>');
                         s.css({
@@ -459,35 +490,35 @@ function initMap() {
                         }), TweenMax.to(s, 1, {
                             y: 0,
                             ease: Expo.easeIn,
-                            onComplete: function() {
-                                n.loader(t, function() {
+                            onComplete: function () {
+                                n.loader(t, function () {
                                     dsnGrid.scrollTop(0, 1), a().unlocked()
                                 })
                             }
                         })
                     },
-                    hideAnimate: function() {
+                    hideAnimate: function () {
                         TweenMax.set(e(s.animateTextAjax), {
                             autoAlpha: 0,
                             y: -50
                         })
                     },
-                    showAnimate: function() {
+                    showAnimate: function () {
                         TweenMax.staggerTo(e(s.animateTextAjax), 1, {
                             autoAlpha: 1,
                             y: 0
                         }, .2)
                     },
-                    loader: function(t, n) {
+                    loader: function (t, n) {
                         var a = this;
-                        o.removeClass("dsn-effect-animate"), this.main_root.load(t + " main.main-root > *", function(i, o, s) {
+                        o.removeClass("dsn-effect-animate"), this.main_root.load(t + " main.main-root > *", function (i, o, s) {
                             var r = e(this);
-                            a.hideAnimate(), "error" !== o ? (a.ajaxTitle(t), history.pushState(null, null, t), setTimeout(function() {
+                            a.hideAnimate(), "error" !== o ? (a.ajaxTitle(t), history.pushState(null, null, t), setTimeout(function () {
                                 a.animateAjaxEnd(), void 0 !== n && n(r, i, s), d = !0
                             }, 500)) : window.location = t
                         })
                     },
-                    animateAjaxEnd: function() {
+                    animateAjaxEnd: function () {
                         var n = this;
                         n.main_root.css("transform", "");
                         let a = e(".class-ajax-loader");
@@ -496,13 +527,13 @@ function initMap() {
                         }, {
                             y: "-100%",
                             ease: Expo.easeIn,
-                            onComplete: function() {
+                            onComplete: function () {
                                 a.remove(), n.ajaxLoaderElemnt(), n.showAnimate()
                             },
                             delay: 1
                         }), t(!0)
                     },
-                    ajaxNext: function(t, n) {
+                    ajaxNext: function (t, n) {
                         var a = e('.dsn-imgs[data-dsn-next="blog"]'),
                             i = this;
                         a.length <= 0 ? i.ajaxNormal(n) : (TweenMax.set(a, {
@@ -511,26 +542,26 @@ function initMap() {
                         }), TweenMax.to(a, 1, {
                             top: 0,
                             ease: Expo.easeInOut,
-                            onComplete: function() {
+                            onComplete: function () {
                                 e('[data-dsn-header="blog"]').css("width", "100%"), i.createElement(a, n)
                             }
                         }))
                     },
-                    ajaxTitle: function(t) {
-                        e("title").load(t + " title", "", function(t) {
+                    ajaxTitle: function (t) {
+                        e("title").load(t + " title", "", function (t) {
                             document.title = e(this).text()
                         });
                         var n = e("#wpadminbar");
-                        n.length > 0 && n.load(t + " #wpadminbar", "", function(t) {
+                        n.length > 0 && n.load(t + " #wpadminbar", "", function (t) {
                             n.html(e(this).html())
                         })
                     },
-                    ajaxLoaderElemnt: function(e) {
+                    ajaxLoaderElemnt: function (e) {
                         e ? o.addClass("dsn-ajax-effect") : o.removeClass("dsn-ajax-effect")
                     }
                 }
             }(n).ajaxLoad(),
-            function(t) {
+            function (t) {
                 function n() {
                     dsnGrid.elementHover(i, "a.link-pop , a > img", "cursor-view"), dsnGrid.elementHover(i, ".close-wind", "cursor-close"), dsnGrid.elementHover(i, "a:not(> img) , .dsn-button-sidebar,  button", "cursor-link")
                 }
@@ -588,12 +619,12 @@ function initMap() {
                 zoom: {
                     enabled: !0,
                     duration: 300,
-                    opener: function(e) {
+                    opener: function (e) {
                         return e.find("img")
                     }
                 }
             }),
-            function() {
+            function () {
                 var t = e(".gallery-portfolio");
                 if (t.length < 1) return;
                 t.justifiedGallery({
@@ -612,35 +643,62 @@ function initMap() {
                         enabled: !0,
                         duration: 300,
                         easing: "ease-in-out",
-                        opener: function(e) {
+                        opener: function (e) {
                             return e.find("img")
                         }
                     },
                     callbacks: {
-                        open: function() {
+                        open: function () {
                             e("html").css({
                                 margin: 0
                             })
                         },
-                        close: function() {}
+                        close: function () { }
                     }
                 })
             }(),
-            function() {
+            $(".tt-accordion").each(function () {
+                // اگر محتوای آکاردئون کلاس "is-open" را داشته باشد
+                $(this).find(".tt-accordion-item").each(function () {
+                    var $this = $(this);
+                    if ($this.find(".tt-accordion-content").hasClass("is-open")) {
+                        $this.addClass("active");
+                    }
+                });
+
+                // کلیک روی آیتم آکاردئون
+                $(this).find(".tt-accordion-heading").on("click", function () {
+                    var $this = $(this);
+
+                    if ($this.parents(".tt-accordion-item").hasClass("active")) {
+                        // اگر آیتم فعال است، آن را ببند
+                        $this.parents(".tt-accordion-item").removeClass("active");
+                        $this.next(".tt-accordion-content").slideUp(350);
+                    } else {
+                        // اگر آیتم غیرفعال است، بقیه را ببند و این را باز کن
+                        $this.parent().parent().find(".tt-accordion-item").removeClass("active");
+                        $this.parent().parent().find(".tt-accordion-content").slideUp(350);
+                        $this.parents(".tt-accordion-item").toggleClass("active");
+                        $this.next(".tt-accordion-content").slideToggle(350);
+                    }
+                });
+            })
+            ,
+            function () {
                 const t = e(".view-all");
                 if (t.length <= 0) return;
-                t.on("click", function() {
+                t.on("click", function () {
                     o.toggleClass("dsn-show-work")
                 });
                 const n = e(".nav-work-box").find(".work-item"),
                     a = e(".nav-work-img-box");
-                n.each(function(t) {
+                n.each(function (t) {
                     let n = e(this);
                     n.attr("data-dsn-id", t);
                     let i = n.find("img");
                     i.attr("data-dsn-id", t), n.hasClass("dsn-active") && i.addClass("dsn-active"), a.append(i)
-                }), n.on("mouseenter", function() {
-                    let t = function(e) {
+                }), n.on("mouseenter", function () {
+                    let t = function (e) {
                         let t = e.data("dsn-id");
                         return a.find('img[data-dsn-id="' + t + '"]')
                     }(e(this));
@@ -650,14 +708,14 @@ function initMap() {
                     a.find("img").removeClass("dsn-active").removeClass("dsn-active-enter").removeClass("dsn-active-leve"), i.addClass("dsn-active-leve"), t.addClass("dsn-active dsn-active-enter")
                 })
             }(),
-            function() {
+            function () {
                 const t = e(".dsn-slider"),
                     n = 1.2;
                 return {
-                    initSlider: function() {
+                    initSlider: function () {
                         const n = t.find(".slide-item"),
                             a = t.find(".dsn-slider-content");
-                        n.each(function(t) {
+                        n.each(function (t) {
                             e(this).attr("data-dsn-id", t);
                             let n = e(this).find(".slide-content");
                             n.attr("data-dsn-id", t), 0 === t && n.addClass("dsn-active dsn-active-cat"), a.append(n);
@@ -665,8 +723,8 @@ function initMap() {
                             dsnGrid.convertTextLine(i, i)
                         })
                     },
-                    progress: function(e) {
-                        e.on("progress", function() {
+                    progress: function (e) {
+                        e.on("progress", function () {
                             let e = this;
                             for (let t = 0; t < e.slides.length; t++) {
                                 let n = e.slides[t].progress,
@@ -676,14 +734,14 @@ function initMap() {
                             }
                         })
                     },
-                    slideChange: function(a) {
+                    slideChange: function (a) {
                         var i = this;
-                        a.on("slideChange", function() {
+                        a.on("slideChange", function () {
                             let o = t.find(".dsn-slider-content .dsn-active"),
                                 s = o.data("dsn-id");
                             let r = e(a.slides[a.activeIndex]).data("dsn-id");
                             if (s === r) return;
-                            t.find('[data-dsn="video"] video').each(function() {
+                            t.find('[data-dsn="video"] video').each(function () {
                                 this.pause()
                             });
                             let l = e(this.slides[this.activeIndex]).find('[data-dsn="video"] video');
@@ -694,12 +752,12 @@ function initMap() {
                                 u = c.find(".dsn-chars-wrapper"),
                                 f = s > r,
                                 h = new TimelineLite;
-                            h.staggerFromTo(dsnGrid.randomObjectArray(d, .3), .3, i.showText().title, i.hideText(f).title, .1, 0, function() {
+                            h.staggerFromTo(dsnGrid.randomObjectArray(d, .3), .3, i.showText().title, i.hideText(f).title, .1, 0, function () {
                                 t.find(".dsn-slider-content .slide-content").removeClass("dsn-active"), t.find(".dsn-slider-content .slide-content").removeClass("dsn-active-cat"), c.addClass("dsn-active"), c.addClass("dsn-active-cat")
                             }), h.staggerFromTo(dsnGrid.randomObjectArray(u, n), n, i.hideText(f).title, i.showText().title, .1, "-=.8")
                         })
                     },
-                    showText: function() {
+                    showText: function () {
                         return {
                             title: {
                                 autoAlpha: 1,
@@ -716,7 +774,7 @@ function initMap() {
                             }
                         }
                     },
-                    hideText: function(e) {
+                    hideText: function (e) {
                         let t = "-90%";
                         return e && (t = "90%"), {
                             title: {
@@ -734,19 +792,19 @@ function initMap() {
                             }
                         }
                     },
-                    touchStart: function(e) {
-                        e.on("touchStart", function() {
+                    touchStart: function (e) {
+                        e.on("touchStart", function () {
                             let e = this;
                             for (let t = 0; t < e.slides.length; t++) e.slides[t].style.transition = ""
                         })
                     },
-                    setTransition: function(e) {
-                        e.on("setTransition", function(e) {
+                    setTransition: function (e) {
+                        e.on("setTransition", function (e) {
                             let t = this;
                             for (let n = 0; n < t.slides.length; n++) t.slides[n].style.transition = e + "ms", t.slides[n].querySelector(".image-bg").style.transition = e + "ms"
                         })
                     },
-                    swiperObject: function() {
+                    swiperObject: function () {
                         return new Swiper(".dsn-slider .slide-inner", {
                             speed: 1500,
                             allowTouchMove: !0,
@@ -759,24 +817,24 @@ function initMap() {
                                 el: ".dsn-slider .footer-slid .control-num span",
                                 type: "custom",
                                 clickable: !0,
-                                renderCustom: function(e, t, n) {
+                                renderCustom: function (e, t, n) {
                                     return dsnGrid.numberText(t)
                                 }
                             },
                             on: {
-                                init: function() {
-                                    this.autoplay.stop(), t.find('[data-dsn="video"] video').each(function() {
+                                init: function () {
+                                    this.autoplay.stop(), t.find('[data-dsn="video"] video').each(function () {
                                         this.pause()
                                     })
                                 },
-                                imagesReady: function() {
+                                imagesReady: function () {
                                     let t = e(this.slides[this.activeIndex]).find('[data-dsn="video"] video');
                                     t.length > 0 && t[0].play()
                                 }
                             }
                         })
                     },
-                    run: function() {
+                    run: function () {
                         if (t.length <= 0) return;
                         this.initSlider();
                         var n = this.swiperObject();
@@ -805,7 +863,7 @@ function initMap() {
             o = e(".header-single-post .container").offset(),
             s = e(".post-full-content").offset(),
             l = 0;
-        void 0 !== o ? a = o : a.top <= 70 && (a = s), r.getListener(function(e) {
+        void 0 !== o ? a = o : a.top <= 70 && (a = s), r.getListener(function (e) {
             n = "scroll" === e.type ? i.scrollTop() : e.offset.y;
             let o = 70;
             void 0 !== a && (o = a.top - 100), n > o ? l < n ? t.addClass("nav-bg").addClass("hide-nave") : t.removeClass("hide-nave") : t.removeClass("nav-bg").removeClass("hide-nave"), l = n
@@ -816,72 +874,72 @@ function initMap() {
         const t = window.Scrollbar;
         var a = document.querySelector("#dsn-scrollbar");
         return {
-            isMobile: function() {
+            isMobile: function () {
                 return !!(navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i) || navigator.userAgent.match(/Edge/i) || navigator.userAgent.match(/MSIE 10/i) || navigator.userAgent.match(/MSIE 9/i))
             },
-            isMobiles: function() {
+            isMobiles: function () {
                 return !!(navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i) || navigator.userAgent.match(/Edge/i) || navigator.userAgent.match(/MSIE 10/i) || navigator.userAgent.match(/MSIE 9/i) || i.width() <= 991)
             },
-            isScroller: function(e) {
+            isScroller: function (e) {
                 e && (a = document.querySelector("#dsn-scrollbar"));
                 let t = !o.hasClass("dsn-effect-scroll") || this.isMobile() || null === a;
                 return t && e && o.addClass("dsn-mobile"), !t
             },
-            locked: function() {
+            locked: function () {
                 if (o.addClass("locked-scroll"), this.isScroller()) {
                     let e = this.getScrollbar();
                     void 0 !== e && e.destroy()
                 }
             },
-            unlocked: function() {
+            unlocked: function () {
                 o.removeClass("locked-scroll"), this.start(), n(), l.allInt(), dsnGrid.progressCircle(r)
             },
-            getScrollbar: function(e) {
+            getScrollbar: function (e) {
                 return void 0 === e ? t.get(a) : t.get(document.querySelector(e))
             },
-            getListener: function(e) {
+            getListener: function (e) {
                 if (void 0 !== e) {
                     var t = this;
                     t.isScroller(!0) ? t.getScrollbar().addListener(e) : i.on("scroll", e)
                 }
             },
-            start: function() {
-                if (dsnGrid.scrollTop(0, 1), e(".scroll-to").on("click", function(t) {
-                        t.preventDefault();
-                        let n = i;
-                        r.isScroller(!0) && (n = r.getScrollbar()), TweenLite.to(n, 1.5, {
-                            scrollTo: e(".wrapper").offset().top,
-                            ease: Expo.easeInOut
-                        })
-                    }), !this.isScroller(!0)) return;
+            start: function () {
+                if (dsnGrid.scrollTop(0, 1), e(".scroll-to").on("click", function (t) {
+                    t.preventDefault();
+                    let n = i;
+                    r.isScroller(!0) && (n = r.getScrollbar()), TweenLite.to(n, 1.5, {
+                        scrollTo: e(".wrapper").offset().top,
+                        ease: Expo.easeInOut
+                    })
+                }), !this.isScroller(!0)) return;
                 let n = .05;
                 this.isMobiles() && (n = .02), t.init(a, {
                     damping: n
                 }), this.workScroll()
             },
-            sliderScroll: function() {
+            sliderScroll: function () {
                 t.init(document.querySelector(".slider .main-slider .slider-nav-list"), {
                     damping: .05
                 })
             },
-            menuScroll: function() {
+            menuScroll: function () {
                 t.init(document.querySelector(".nav__content"), {
                     damping: .05
                 })
             },
-            commentScroll: function() {
+            commentScroll: function () {
                 const e = document.querySelector(".comment-modal .comment-modal-container");
                 null !== e && t.init(e, {
                     damping: .05
                 })
             },
-            sidebarScroll: function() {
+            sidebarScroll: function () {
                 const e = document.querySelector(".dsn-sidebar .sidebar-single");
                 null !== e && t.init(e, {
                     damping: .05
                 })
             },
-            workScroll: function() {
+            workScroll: function () {
                 const e = document.querySelector(".dsn-all-work .dsn-work-scrollbar");
                 null !== e && t.init(e, {
                     damping: .05
@@ -895,7 +953,7 @@ function initMap() {
             animateTextAjax: '.headefr-fexid .project-title .title-text-header .cat ,[data-dsn-animate="ajax"] , footer, .next-project , .root-project'
         };
     (navigator.userAgent.match(/Edge/i) || navigator.userAgent.match(/MSIE 10/i) || navigator.userAgent.match(/MSIE 9/i)) && e(".cursor").css("display", "none"),
-        function() {
+        function () {
             var t = e(".preloader"),
                 n = t.find(".preloader-block"),
                 a = n.find(".percent"),
@@ -905,19 +963,19 @@ function initMap() {
                 l = r.find(".preloader-progress"),
                 d = t.find(".preloader-after"),
                 c = t.find(".preloader-before"),
-                u = dsnGrid.pageLoad(0, 100, 300, function(e) {
+                u = dsnGrid.pageLoad(0, 100, 300, function (e) {
                     a.text(e), l.css("width", e + "%")
                 });
-            i.on("load", function() {
+            i.on("load", function () {
                 clearInterval(u), TweenMax.fromTo(l, .5, {
                     width: "95%"
                 }, {
                     width: "100%",
-                    onUpdate: function() {
+                    onUpdate: function () {
                         var e = l.width() / l.parent().width() * 100;
                         a.text(parseInt(e, 10))
                     },
-                    onComplete: function() {
+                    onComplete: function () {
                         TweenMax.to(r, .5, {
                             left: "100%"
                         }), TweenMax.to(o, 1, {
@@ -934,7 +992,7 @@ function initMap() {
                         }), TweenMax.to(d, 1, {
                             y: "100%",
                             delay: .7,
-                            onComplete: function() {
+                            onComplete: function () {
                                 t.addClass("hidden")
                             }
                         })
@@ -942,27 +1000,27 @@ function initMap() {
                 })
             })
         }(),
-        function() {
+        function () {
             var t = e(".menu-icon");
-            e(".site-header .custom-drop-down > a").on("click", function() {
+            e(".site-header .custom-drop-down > a").on("click", function () {
                 return !1
-            }), i.on("load", function() {
+            }), i.on("load", function () {
                 const n = e(".site-header nav > ul");
                 if (n.length <= 0) return;
                 let a = n[0].outerHTML;
                 (a = e(a)).attr("class", "nav__list"), a.find("li.custom-drop-down").attr("class", "nav__list-dropdown"), a.find("li").addClass("nav__list-item");
                 let i = e(".header-top .nav .nav__content");
-                void 0 !== i && i.prepend(a), t.on("click", function() {
+                void 0 !== i && i.prepend(a), t.on("click", function () {
                     o.toggleClass("nav-active")
-                }), e(".nav__list-item:not(.nav__list-dropdown) ").on("click", function() {
+                }), e(".nav__list-item:not(.nav__list-dropdown) ").on("click", function () {
                     o.removeClass("nav-active")
-                }), e(".nav__list-dropdown > a").on("click", function(t) {
+                }), e(".nav__list-dropdown > a").on("click", function (t) {
                     t.preventDefault();
                     var n = e(this).parent(),
                         a = n.find("ul").css("display");
                     e(".nav__list-dropdown").find("ul").slideUp("slow"), "block" !== a && n.find("ul").slideDown("slow")
                 })
-            }), i.on("scroll", function() {
+            }), i.on("scroll", function () {
                 var t = i.scrollTop(),
                     n = e(".site-header , .header-top"),
                     a = e(".page-content").offset(),
@@ -978,18 +1036,18 @@ function initMap() {
             }
         }();
     var r = a(),
-        l = function() {
+        l = function () {
             var t = new ScrollMagic.Controller;
             const n = '[data-dsn-header="project"]',
                 a = '[data-dsn-footer="project"]';
             return {
-                clearControl: function() {
+                clearControl: function () {
                     t = new ScrollMagic.Controller
                 },
-                isElemntId: function(e) {
+                isElemntId: function (e) {
                     return null !== document.getElementById(e)
                 },
-                headerProject: function() {
+                headerProject: function () {
                     if (e(n).length <= 0) return !1;
                     let a = e("#dsn-hero-parallax-img"),
                         i = e("#dsn-hero-parallax-title"),
@@ -1010,37 +1068,37 @@ function initMap() {
                         }, 0)
                     }
                     if (i.length > 0 && (i.hasClass("project-title") && (l = 1), d.to(i, .8, {
-                            force3D: !0,
-                            top: "30%",
-                            autoAlpha: 0,
-                            scale: l
-                        }, 0)), s.length > 0 && d.to(s, 1, {
-                            force3D: !0,
-                            height: 80
-                        }, 0).to("#dsn-hero-parallax-fill-title h1", 1, {
-                            force3D: !0,
-                            top: 0
-                        }, 0).to(i.find(".slider-header.slider-header-top"), 1, {
-                            force3D: !0,
-                            height: 0
-                        }, 0), r.length > 0 && d.to(r, .8, {
-                            force3D: !0,
-                            bottom: "-10%",
-                            autoAlpha: 0
-                        }, 0), d._totalDuration <= 0) return !1;
+                        force3D: !0,
+                        top: "30%",
+                        autoAlpha: 0,
+                        scale: l
+                    }, 0)), s.length > 0 && d.to(s, 1, {
+                        force3D: !0,
+                        height: 80
+                    }, 0).to("#dsn-hero-parallax-fill-title h1", 1, {
+                        force3D: !0,
+                        top: 0
+                    }, 0).to(i.find(".slider-header.slider-header-top"), 1, {
+                        force3D: !0,
+                        height: 0
+                    }, 0), r.length > 0 && d.to(r, .8, {
+                        force3D: !0,
+                        bottom: "-10%",
+                        autoAlpha: 0
+                    }, 0), d._totalDuration <= 0) return !1;
                     var c = new ScrollMagic.Scene({
                         triggerElement: n,
                         triggerHook: 0,
                         duration: "100%"
                     }).setTween(d).addTo(t);
                     let u = a.find("video");
-                    return (u.length > 0 || o.hasClass("v-light")) && (c.on("enter", function() {
+                    return (u.length > 0 || o.hasClass("v-light")) && (c.on("enter", function () {
                         u.length > 0 && u.get(0).play(), o.hasClass("v-light") && !e(n).hasClass("header-hero-2") && o.removeClass("menu-light")
-                    }), c.on("leave", function() {
+                    }), c.on("leave", function () {
                         u.length > 0 && u.get(0).pause(), o.hasClass("v-light") && !e(n).hasClass("header-hero-2") && o.addClass("menu-light")
                     })), c
                 },
-                nextProject: function() {
+                nextProject: function () {
                     let n = e("#dsn-next-parallax-img"),
                         i = e("#dsn-next-parallax-title"),
                         s = !(n.length <= 0) && new ScrollMagic.Scene({
@@ -1062,14 +1120,14 @@ function initMap() {
                             opacity: 1,
                             ease: Power0.easeNone
                         }, 0)).addTo(t);
-                    r.getListener(function(e) {
+                    r.getListener(function (e) {
                         !1 !== s && s.refresh(), !1 !== l && l.refresh()
-                    }), !1 !== l && o.hasClass("v-light") && l.on("progress", function(e) {
+                    }), !1 !== l && o.hasClass("v-light") && l.on("progress", function (e) {
                         e.progress > .8 ? o.removeClass("menu-light") : o.addClass("menu-light")
                     })
                 },
-                parallaxImg: function() {
-                    e('[data-dsn-grid="move-up"]').each(function() {
+                parallaxImg: function () {
+                    e('[data-dsn-grid="move-up"]').each(function () {
                         let n = e(this);
                         n.attr("data-dsn-grid", "moveUp");
                         let a = n.find("img:not(.hidden) , video"),
@@ -1103,14 +1161,14 @@ function initMap() {
                                 triggerHook: i,
                                 duration: o
                             }).setTween(s).addTo(t);
-                            r.getListener(function() {
+                            r.getListener(function () {
                                 l.refresh()
                             })
                         }
                     })
                 },
-                moveSection: function() {
-                    e('[data-dsn-grid="move-section"]').each(function() {
+                moveSection: function () {
+                    e('[data-dsn-grid="move-section"]').each(function () {
                         let n = e(this);
                         n.removeAttr("data-dsn-grid"), n.addClass("dsn-move-section");
                         let a = dsnGrid.getUndefinedVal(n.data("dsn-move"), -100),
@@ -1128,14 +1186,14 @@ function initMap() {
                             triggerHook: o,
                             duration: l
                         }).setTween(d).addTo(t);
-                        r.getListener(function() {
+                        r.getListener(function () {
                             c.refresh()
                         })
                     })
                 },
-                parallaxImgHover: function() {
+                parallaxImgHover: function () {
                     const t = e('[data-dsn="parallax"]');
-                    0 === t.length || i.width() < 992 || t.each(function() {
+                    0 === t.length || i.width() < 992 || t.each(function () {
                         var t = e(this),
                             n = (dsnGrid.removeAttr(t, "data-dsn"), dsnGrid.removeAttr(t, "data-dsn-speed")),
                             a = dsnGrid.removeAttr(t, "data-dsn-move"),
@@ -1144,27 +1202,27 @@ function initMap() {
                     })
                 },
                 // change color
-                changeColor: function() {
+                changeColor: function () {
                     const n = "v-light";
                     var a = o.hasClass(n);
-                    e('[data-dsn="color"]').each(function() {
+                    e('[data-dsn="color"]').each(function () {
                         let i = dsnGrid.getUndefinedVal(e(this).data("dsn-duration"), e(this).outerHeight() + 500);
                         var s = new ScrollMagic.Scene({
                             triggerElement: this,
                             triggerHook: 0.5,
                             duration: i
                         }).addTo(t);
-                        s.on("enter", function() {
+                        s.on("enter", function () {
                             a ? o.removeClass(n) : o.addClass(n)
-                        }), s.on("leave", function() {
+                        }), s.on("leave", function () {
                             a ? o.addClass(n) : o.removeClass(n)
-                        }), r.getListener(function() {
+                        }), r.getListener(function () {
                             s.refresh()
                         })
                     })
                 },
-                animateText: function() {
-                    e('[data-dsn-animate="text"] , [data-dsn-animate="up"]').each(function() {
+                animateText: function () {
+                    e('[data-dsn-animate="text"] , [data-dsn-animate="up"]').each(function () {
                         let n = e(this),
                             a = 1;
                         "text" === n.data("dsn-animate") ? (dsnGrid.convertTextWord(n, n), n.attr("data-dsn-animate", "animate")) : a = .8;
@@ -1173,12 +1231,12 @@ function initMap() {
                             reverse: !1,
                             triggerHook: a
                         }).setClassToggle(this, "dsn-active").addTo(t);
-                        r.getListener(function() {
+                        r.getListener(function () {
                             i.refresh()
                         })
                     })
                 },
-                headerBlog: function() {
+                headerBlog: function () {
                     const n = e('[data-dsn-header="blog"]');
                     if (!(n.length <= 0 || i.width() < 992)) {
                         var a = new ScrollMagic.Scene({
@@ -1190,22 +1248,22 @@ function initMap() {
                         }, {
                             width: "80%"
                         })).addTo(t);
-                        r.getListener(function() {
+                        r.getListener(function () {
                             a.refresh()
                         })
                     }
                 },
-                allInt: function() {
+                allInt: function () {
                     this.clearControl();
                     let e = this.headerProject();
-                    r.getListener(function(t) {
+                    r.getListener(function (t) {
                         !1 !== e && e.refresh()
                     }), this.nextProject(), this.parallaxImgHover(), this.parallaxImg(), this.moveSection(), this.animateText(), this.changeColor()
                 }
             }
         }();
-    r.start(), l.allInt(), t(), i.on("popstate", function(n) {
-        e("main.main-root").load(document.location + " main.main-root > *", function() {
+    r.start(), l.allInt(), t(), i.on("popstate", function (n) {
+        e("main.main-root").load(document.location + " main.main-root > *", function () {
             t(!0), a().unlocked()
         })
     }), contactValidator(), n()
