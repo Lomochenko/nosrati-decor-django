@@ -572,12 +572,55 @@
         <div class="cursor-helper cursor-link"></div>
     </div>
     <!-- End cursor -->
-
+    
     <!-- Optional JavaScript -->
     <script src="assets/js/jquery-3.1.1.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/dsn-grid.js"></script>
     <script src="assets/js/custom.js"></script>
+    
+    <!-- Custom Popup -->
+    <div id="custom-popup" class="custom-popup">
+        <div class="popup-content">
+            <!--  -->
+            <div class="form-box">
+                <span class="close-popup">&times;</span>
+                <h3>Write A Comment</h3>
+                <form id="contact-form" class="form" method="post" action="#" data-toggle="validator">
+                    <div class="messages"></div>
+                    <div class="input__wrap controls">
+                        <div class="form-group">
+
+                            <div class="entry">
+                                <label>What's your name?</label>
+                                <input id="form_name" type="text" name="name" class="text-left"
+                                    placeholder="Type your name" required="required" data-error="name is required.">
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="entry">
+                                <label>What's up?</label>
+                                <textarea id="#" class="form-control text-left" name="message"
+                                    placeholder="Tell us about you and the world" required="required"
+                                    data-error="Please,leave us a message."></textarea>
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="image-zoom" data-dsn="parallax">
+                            <button class="popup-button">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--  -->
+            <!-- <h3>به نصرتی دکور خوش آمدید</h3> -->
+            <!-- <p>برای مشاوره رایگان و دریافت کاتالوگ محصولات با ما در تماس باشید.</p> -->
+            <!-- <button class="popup-button">تماس با ما</button> -->
+        </div>
+    </div>
 </body>
 
 </html>

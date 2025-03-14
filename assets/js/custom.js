@@ -1078,9 +1078,6 @@ function initCursor() {
                     }, 0).to("#dsn-hero-parallax-fill-title h1", 1, {
                         force3D: !0,
                         top: 0
-                    }, 0).to(i.find(".slider-header.slider-header-top"), 1, {
-                        force3D: !0,
-                        height: 0
                     }, 0), r.length > 0 && d.to(r, .8, {
                         force3D: !0,
                         bottom: "-10%",
@@ -1267,4 +1264,47 @@ function initCursor() {
             t(!0), a().unlocked()
         })
     }), contactValidator(), n()
+    
+    // Custom Popup Function
+    function initCustomPopup() {
+        const popup = $('#custom-popup');
+        const closeBtn = $('.close-popup');
+        const popupButton = $('.popup-button');
+        
+        // show pop up after ... seconds
+        setTimeout(function() {
+            popup.css('display', 'block');
+            setTimeout(() => {
+                popup.addClass('show');
+            }, 10);
+        }, 5000);
+
+        // close pop up
+        closeBtn.on('click', function() {
+            popup.removeClass('show');
+            setTimeout(() => {
+                popup.css('display', 'none');
+            }, 300);
+        });
+
+        // close pop up out of box
+        popup.on('click', function(e) {
+            if (e.target === this) {
+                popup.removeClass('show');
+                setTimeout(() => {
+                    popup.css('display', 'none');
+                }, 300);
+            }
+        });
+
+        // pop up action
+        popupButton.on('click', function() {
+            window.location.href = 'contact.html';
+        });
+    }
+
+    // اضافه کردن فراخوانی تابع به بخش document ready
+    $(document).ready(function() {
+        initCustomPopup();
+    });
 }(jQuery);
