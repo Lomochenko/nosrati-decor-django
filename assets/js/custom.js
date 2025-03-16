@@ -1277,7 +1277,7 @@ function initCursor() {
             setTimeout(() => {
                 popup.addClass('show');
             }, 10);
-        }, 5000);
+        }, 25000);
 
         // close pop up
         closeBtn.on('click', function() {
