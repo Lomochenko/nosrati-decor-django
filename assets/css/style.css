@@ -11328,6 +11328,26 @@ body.dsn-show-work .dsn-all-work .list-main:nth-of-type(20) .work-item {
   border-bottom: solid 2px #fff;
 }
 
+/* collapsible content */
+.collapsible-content {
+  transition: all 0.4s ease;
+}
+
+.toggle-content {
+  cursor: pointer;
+}
+
+/* نمایش همه محتوا در سایز موبایل و تبلت */
+@media (max-width: 991px) {
+  .collapsible-content {
+    display: block !important;
+  }
+
+  .toggle-content {
+    display: none !important;
+  }
+}
+
 .v-light .root-work .filterings .filtering-wrap .filtering a.active {
   border-bottom: solid 2px #bebebe;
 }

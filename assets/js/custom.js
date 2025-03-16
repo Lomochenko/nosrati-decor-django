@@ -1307,4 +1307,57 @@ function initCursor() {
     $(document).ready(function() {
         initCustomPopup();
     });
+
+    function initContentToggle() {
+        // فقط در سایز لپتاپ و بزرگتر اجرا شود
+        if ($(window).width() >= 992) {
+            const $toggleBtn = $('.toggle-content');
+            const $collapsibleContent = $('.collapsible-content');
+            
+            // تنظیم وضعیت اولیه
+            $collapsibleContent.hide();
+            
+            $toggleBtn.on('click', function() {
+                const isVisible = $collapsibleContent.is(':visible');
+                
+                if (isVisible) {
+                    // مخفی کردن محتوا
+                    $collapsibleContent.slideUp(400);
+                    $(this).find('span').text('Load More');
+                    
+                    // اسکرول به بالای صفحه
+                    $('html, body').animate({
+                        scrollTop: $('.container.pb-100').offset().top - 100
+                    }, 400);
+                    
+                } else {
+                    // نمایش محتوا
+                    $collapsibleContent.slideDown(400);
+                    $(this).find('span').text('Close');
+                }
+            });
+            
+            // بررسی تغییر سایز پنجره
+            $(window).on('resize', function() {
+                if ($(window).width() < 992) {
+                    $collapsibleContent.show();
+                    $toggleBtn.hide();
+                } else {
+                    if (!$collapsibleContent.is(':visible')) {
+                        $toggleBtn.show().find('span').text('Load More');
+                    }
+                }
+            });
+        } else {
+            // در سایزهای کوچکتر همه محتوا نمایش داده شود
+            $('.collapsible-content').show();
+            $('.toggle-content').hide();
+        }
+    }
+
+    // اضافه کردن فراخوانی تابع به بخش document ready
+    $(document).ready(function() {
+        // ... existing ready functions ...
+        initContentToggle();
+    });
 }(jQuery);
